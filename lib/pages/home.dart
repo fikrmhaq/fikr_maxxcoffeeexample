@@ -1,10 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:newproject/models/menu.dart';
+import 'dart:async';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
+  const Home({super.key});
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  int _selectedIndex = 0;
+  final CarouselController _controller = CarouselController();
+  List<Menu> menu = [
+    Menu(
+        name: "Americano",
+        desc: 'European coffee that approaches the American style of coffee',
+        url: 'assets/americanoG.png'),
+    Menu(
+        name: "Cream Frappe",
+        desc: 'One of Maxx Coffee’s signature. A blend of vanilla, milk',
+        url: 'assets/frappeG.png')
+  ];
+
+  void initState() {
+    super.initState();
+    Timer.periodic(new Duration(seconds: 2), (timer) {
+      setState(() {
+        _controller.nextPage();
+      });
+    });
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SingleChildScrollView(
-      child: Column(
+      body: Column(
         children: [
           Container(
             width: MediaQuery.of(context).size.width,
@@ -15,179 +46,127 @@ class Home extends StatelessWidget {
                   'assets/group94.png',
                   height: 50,
                 ),
-                Container(
-                  margin: EdgeInsets.only(top: 10),
-                  child: Text(
-                    'MINUMAN MAXX COFFEE TEMBAGAPURA',
-                    style: TextStyle(color: Colors.white, fontSize: 11),
-                  ),
+                Text(
+                  _selectedIndex.toString(),
+                  style: TextStyle(color: Colors.white),
                 )
               ],
             ),
           ),
           Container(
-            width: MediaQuery.of(context).size.width,
-            //height: 450,
-            child: Column(
+            height: 400,
+            child: Stack(
               children: [
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  // height: 80,
-                  margin: EdgeInsets.only(bottom: 50, top: 30),
-                  child: Row(
-                    children: [
-                      Container(
-                        child: Image.asset(
-                          'assets/ellipse34.png',
-                          height: 120,
-                        ),
-                        margin: EdgeInsets.only(right: 10.0, left: 10.0),
-                      ),
-                      Flexible(
-                          child: Container(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Hot/Iced',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 10,
-                                  fontStyle: FontStyle.italic),
-                            ),
-                            Text(
-                              'Americano',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(top: 7),
-                              child: Text(
-                                'A European approach to an American style coffee, combining the perfect espresso with steaming hot water. Also available with ice.',
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 10),
-                              ),
-                            )
-                          ],
-                        ),
-                      )),
-                    ],
-                  ),
+                Image.asset(
+                  'assets/Ellipse34G.png',
+                  width: 300,
                 ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  // height: 80,
-                  margin: EdgeInsets.only(bottom: 50),
-                  child: Row(
-                    children: [
-                      Container(
-                        child: Image.asset(
-                          'assets/ellipse34.png',
-                          height: 120,
-                        ),
-                        margin: EdgeInsets.only(right: 10.0, left: 10.0),
+                Builder(
+                  builder: (context) {
+                    final double height = MediaQuery.of(context).size.height;
+                    return CarouselSlider(
+                      carouselController: _controller,
+                      options: CarouselOptions(
+                        height: height,
+                        viewportFraction: 1.0,
+                        enlargeCenterPage: false,
+                        // autoPlay: false,
                       ),
-                      Flexible(
-                          child: Container(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Hot/Iced',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 10,
-                                  fontStyle: FontStyle.italic),
-                            ),
-                            Text(
-                              'COOKIES & CREAM FRAPPE',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(top: 7),
-                              child: Text(
-                                'One of Maxx Coffee’s signature. A blend of vanilla, milk and cookies, topped with whipped cream',
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 10),
-                              ),
-                            )
-                          ],
-                        ),
-                      )),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  // height: 80,
-                  margin: EdgeInsets.only(bottom: 50),
-                  child: Row(
-                    children: [
-                      Container(
-                        child: Image.asset(
-                          'assets/ellipse34.png',
-                          height: 120,
-                        ),
-                        margin: EdgeInsets.only(right: 10.0, left: 10.0),
-                      ),
-                      Flexible(
-                          child: Container(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Hot/Iced',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 10,
-                                  fontStyle: FontStyle.italic),
-                            ),
-                            Text(
-                              'Americano',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(top: 7),
-                              child: Text(
-                                'A European approach to an American style coffee, combining the perfect espresso with steaming hot water. Also available with ice.',
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 10),
-                              ),
-                            )
-                          ],
-                        ),
-                      )),
-                    ],
-                  ),
+                      items: menu
+                          .map((item) => Container(
+                                child: Center(
+                                    child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Image.asset(item.url, height: 300),
+                                    Container(
+                                      margin: EdgeInsets.only(top: 10),
+                                      constraints:
+                                          BoxConstraints(maxWidth: 230),
+                                      child: Column(
+                                        children: [
+                                          Text(item.name,
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 20)),
+                                          Text(item.desc,
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  color: Colors.white))
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                )),
+                              ))
+                          .toList(),
+                    );
+                  },
                 ),
               ],
             ),
           ),
           Container(
-              width: MediaQuery.of(context).size.width,
-              height: 90,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+            child: SingleChildScrollView(
+              child: Row(
                 children: [
-                  Text(
-                    'NEXT PAGE >',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500),
+                  Container(
+                    height: 110,
+                    margin: EdgeInsets.symmetric(horizontal: 10),
+                    child: Image.asset('assets/promo1.png'),
                   ),
+                  Container(
+                    height: 110,
+                    margin: EdgeInsets.symmetric(horizontal: 10),
+                    child: Image.asset('assets/promo2.png'),
+                  )
                 ],
-              ))
+              ),
+              scrollDirection: Axis.horizontal,
+            ),
+          )
         ],
       ),
-    ));
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Catalogue',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'About',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.black,
+        onTap: (int index) {
+          // setState(() {
+          //   _selectedIndex = index;
+          // });
+          if (index == 0) {
+            Navigator.pushNamed(
+              context,
+              '/',
+            );
+          } else if (index == 1) {
+            Navigator.pushNamed(
+              context,
+              '/catalogue',
+            );
+          } else if (index == 2) {
+            Navigator.pushNamed(
+              context,
+              '/details',
+            );
+          }
+        },
+      ),
+    );
   }
 }

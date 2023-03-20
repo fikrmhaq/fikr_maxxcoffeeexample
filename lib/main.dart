@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:newproject/pages/minuman.dart';
 import 'package:newproject/pages/home.dart';
+import 'package:newproject/pages/catalogue.dart';
+import 'package:newproject/pages/starting.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,7 +28,13 @@ class MyApp extends StatelessWidget {
           // is not restarted.
           primarySwatch: Colors.blue,
           scaffoldBackgroundColor: const Color(0xFF1C1B1B)),
-      home: Home(),
+      // home: Home(),
+      routes: {
+        '/': (context) => Starting(),
+        '/home': (context) => Home(),
+        '/catalogue': (context) => Catalogue(),
+        '/minuman': (context) => Minuman(),
+      },
     );
   }
 }
